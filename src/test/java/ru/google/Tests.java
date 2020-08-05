@@ -1,16 +1,18 @@
 package ru.google;
 
+import io.qameta.allure.Description;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
+import javax.naming.directory.SearchResult;
 import java.util.List;
 
 public class Tests extends WebDriverSettings {
 
-    @Test
+/*    @Test
     public void firstTask(){
         chromeDriver.get("https://www.google.ru");
         WebElement searchField = chromeDriver.findElement(By.xpath("//*[@id=\"tsf\"]/div[2]/div[1]/div[1]/div/div[2]/input"));
@@ -36,27 +38,21 @@ public class Tests extends WebDriverSettings {
         System.out.println(searchResult.size());
         Assertions.assertTrue(searchResult.stream().anyMatch(x->x.getText().contains("Гладиолус — Википедия")));
 
-    }
+    }*/
 
     @Test
+    @Description(value = "Поиск в гугле по слову Гладиолус. Результатов больше трех. Есть ссылка Гладиолус — Википедия. PageObject")
     public void firstTaskPO(){
         chromeDriver.get("https://www.google.ru");
         PageObjectGoogle firstPO = new PageObjectGoogle(chromeDriver);
-        firstPO.find("гладиолус");
+        firstPO.find("Гладиолус");
         firstPO.refreshListOfElement();
-        Assertions.assertTrue(firstPO.getSearchResult().size()>3);
+        Steps.checkResultAmount(firstPO, chromeDriver);
+        Steps.checkWikiLink(firstPO, chromeDriver);
     }
 
     @Test
-    public void secondTaskPO(){
-        chromeDriver.get("https://www.google.ru");
-        PageObjectGoogle secondPO = new PageObjectGoogle(chromeDriver);
-        secondPO.find("гладиолус");
-        secondPO.refreshListOfElement();
-        Assertions.assertTrue(secondPO.getSearchResult().stream().anyMatch(x->x.getText().contains("Гладиолус — Википедия")));
-    }
-
-    @Test
+    @Description(value = "Поиск в гугле по слову Гладиолус. Результатов больше трех. PageFactory")
     public void firstTaskPF(){
         chromeDriver.get("https://www.google.ru");
         PageFactoryGoogle firstPF = PageFactory.initElements(chromeDriver,PageFactoryGoogle.class);
@@ -65,6 +61,7 @@ public class Tests extends WebDriverSettings {
     }
 
     @Test
+    @Description(value = "Поиск в гугле по слову Гладиолус. Есть ссылка Гладиолус — Википедия. PageFactory")
     public void secondTaskPF(){
         chromeDriver.get("https://www.google.ru");
         PageFactoryGoogle secondPF = PageFactory.initElements(chromeDriver,PageFactoryGoogle.class);

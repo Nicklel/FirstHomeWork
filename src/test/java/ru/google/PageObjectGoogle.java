@@ -15,8 +15,8 @@ public class PageObjectGoogle {
 
     PageObjectGoogle(WebDriver chromeDriver){
         this.chromeDriver = chromeDriver;
-        searchField = chromeDriver.findElement(By.xpath("//*[@id=\"tsf\"]/div[2]/div[1]/div[1]/div/div[2]/input"));
-        searchButton = chromeDriver.findElement(By.xpath("//*[@id=\"tsf\"]/div[2]/div[1]/div[3]/center/input[1]"));
+        searchField = chromeDriver.findElement(By.xpath("//*[@title ='Поиск']"));
+        searchButton = chromeDriver.findElement(By.xpath("//*[@class='FPdoLc tfB0Bf']//*[@value='Поиск в Google']"));
     }
 
     public List<WebElement> getSearchResult() {

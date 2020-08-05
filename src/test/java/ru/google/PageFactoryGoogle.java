@@ -11,10 +11,10 @@ import java.util.List;
 public class PageFactoryGoogle {
     private WebDriver chromeDriver;
 
-    @FindBy(how= How.XPATH, using = "//*[@id=\"tsf\"]/div[2]/div[1]/div[1]/div/div[2]/input")
+    @FindBy(how= How.XPATH, using = "//*[@title ='Поиск']")
     WebElement searchField;
 
-    @FindBy(how= How.XPATH, using = "//*[@id=\"tsf\"]/div[2]/div[1]/div[3]/center/input[1]")
+    @FindBy(how= How.XPATH, using = "//*[@class='FPdoLc tfB0Bf']//*[@value='Поиск в Google']")
     WebElement searchButton;
 
     @FindAll(@FindBy(how = How.XPATH, using = "//*[@class=\"LC20lb DKV0Md\"]"))
