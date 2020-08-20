@@ -2,11 +2,8 @@ package ru.google;
 
 import io.qameta.allure.Step;
 import org.junit.jupiter.api.Assertions;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import ru.google.PageObjectGoogle;
-
-import java.util.List;
-import java.util.Map;
 
 public class Steps {
 
@@ -27,6 +24,28 @@ public class Steps {
         } else {
             CustomUtils.getScreen(driver);
             Assertions.fail("Ссылки Гладиолус — Википедия нет");
+        }
+    }
+
+    @Step("Шаг 1. Сортировка по айфонам")
+    public static void findIphone(PageObjectYandexMarketMain yandexMarketPO, WebDriver chromeDriver) throws InterruptedException {
+        yandexMarketPO.goToPhones();
+    }
+
+    @Step("Шаг 2. Проверка что на странице только айфоны")
+    public static void checkPhones(PageObjectYandexMarketPhones yandexMarketPhonesPO, WebDriver chromeDriver) throws InterruptedException {
+        yandexMarketPhonesPO.filterPhones();
+        while (true) {
+            Thread.sleep(5000);
+            yandexMarketPhonesPO.savePhones();
+            yandexMarketPhonesPO.getPhones().forEach(x -> System.out.println(x.getText()));
+            Assertions.assertTrue(yandexMarketPhonesPO.getPhones().stream().allMatch(x -> x.getText().contains("iPhone")));
+            if (chromeDriver.findElements(By.xpath("//a[contains(.,'Вперёд')]")).size()>0)
+            {
+                yandexMarketPhonesPO.getNextPage().click();
+            } else {
+                break;
+            }
         }
     }
 }
